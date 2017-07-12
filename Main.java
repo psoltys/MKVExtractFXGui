@@ -3,6 +3,7 @@ import java.awt.Desktop;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.application.Application;
@@ -26,7 +27,6 @@ public final class Main extends Application {
     @Override
     public void start(final Stage stage) {
         stage.setTitle("Subtitles Extractor");
-
         final FileChooser fileChooser = new FileChooser();
         final DirectoryChooser dirChooser = new DirectoryChooser();
         TextField textField = new TextField ();
@@ -118,8 +118,8 @@ public final class Main extends Application {
         GridPane.setConstraints(openMultipleButton, 1, 0);
         GridPane.setConstraints(textField, 0, 1,5 ,1);
         GridPane.setConstraints(MKVExamine, 2, 0);
-        GridPane.setConstraints(MKVExtract, 3, 0);
-        GridPane.setConstraints(comboBox, 4, 0);
+        GridPane.setConstraints(MKVExtract, 4, 0);
+        GridPane.setConstraints(comboBox, 3, 0);
         GridPane.setConstraints(scroller, 0, 2,5 ,1);
         inputGridPane.setHgap(6);
         inputGridPane.setVgap(6);
@@ -147,7 +147,7 @@ public final class Main extends Application {
     }
 
     private static void configureFileChooser(final FileChooser fileChooser){
-        fileChooser.setTitle("View Pictures");
+        fileChooser.setTitle("Wybierz Plik");
         fileChooser.setInitialDirectory(
                 new File(System.getProperty("user.home"))
         );
@@ -165,9 +165,8 @@ public final class Main extends Application {
     }
     public void execute(String command){
         System.out.println(command);
-        Commander myRunnable = new Commander(command, this);
-        Thread t = new Thread(myRunnable);
-        t.start();
+        Commander commander = new Commander();
+        commander.execute(command,this);
     }
 
     private void openFile(File file) {
